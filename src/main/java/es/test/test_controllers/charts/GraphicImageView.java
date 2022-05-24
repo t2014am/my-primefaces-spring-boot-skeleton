@@ -27,9 +27,10 @@ public class GraphicImageView implements Serializable {
 		// Chart
 		JFreeChart jfreechart = ChartFactory.createPieChart("Cities", createDataset(), true, true, false);
 		ByteArrayInputStream chartStream = createInMemoryChartStream(jfreechart);
-		DefaultStreamedContent chart = new DefaultStreamedContent(chartStream, "image/png");
-		chart.setName("Chart.png");
-		return chart;
+//		DefaultStreamedContent chart = new DefaultStreamedContent(chartStream, "image/png");
+//		chart.setName("Chart.png");
+//		return chart;
+		return null;
 	}
 
 	private static ByteArrayInputStream createInMemoryChartStream(JFreeChart jfreechart) throws IOException {

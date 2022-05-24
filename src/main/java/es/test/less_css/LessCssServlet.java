@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jdt.annotation.Nullable;
+import org.primefaces.shaded.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.inet.lib.less.Less;
@@ -22,6 +23,7 @@ import lombok.Setter;
 /**
  * A on the fly css generator from less file.
  */
+@Slf4j
 @WebServlet("/style.css")
 public class LessCssServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,6 +46,10 @@ public class LessCssServlet extends HttpServlet {
 		String lcachedCss = getCachedCss();
 		if (!useCache || lcachedCss == null) {
 			try (InputStream lessResource = this.getClass().getResourceAsStream("/static/style.less")) {
+				if (null == lessResource) {
+					log.warn("Styles not loaded correctly. ");
+					return;
+				}
 				String lessString = IOUtils.toString(lessResource, Charset.defaultCharset());
 				css = Less.compile(null, lessString, true);
 				setCachedCss(css);
