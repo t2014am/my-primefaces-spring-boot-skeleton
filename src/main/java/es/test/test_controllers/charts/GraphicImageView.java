@@ -1,10 +1,7 @@
 package es.test.test_controllers.charts;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 
 import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
@@ -27,10 +24,7 @@ public class GraphicImageView implements Serializable {
 		// Chart
 		JFreeChart jfreechart = ChartFactory.createPieChart("Cities", createDataset(), true, true, false);
 		ByteArrayInputStream chartStream = createInMemoryChartStream(jfreechart);
-//		DefaultStreamedContent chart = new DefaultStreamedContent(chartStream, "image/png");
-//		chart.setName("Chart.png");
-//		return chart;
-		return null;
+		return DefaultStreamedContent.builder().stream(() -> chartStream).contentEncoding("image/png").build();
 	}
 
 	private static ByteArrayInputStream createInMemoryChartStream(JFreeChart jfreechart) throws IOException {

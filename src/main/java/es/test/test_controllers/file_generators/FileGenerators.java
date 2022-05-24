@@ -51,10 +51,8 @@ public class FileGenerators implements Serializable {
 
 		document.close();
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-//		DefaultStreamedContent streamedContent = new DefaultStreamedContent(inputStream, "application/pdf");
-//		streamedContent.setName("Example.pdf");
-//		return streamedContent;
-		return null;
+		return DefaultStreamedContent.builder().stream(() -> inputStream).contentEncoding("application/pdf")
+				.name("Example.pdf").build();
 	}
 	
 	@SuppressWarnings("static-method")
@@ -69,10 +67,9 @@ public class FileGenerators implements Serializable {
         	workbook.write(outputStream);
         	
         	ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-//        	DefaultStreamedContent streamedContent = new DefaultStreamedContent(inputStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-//        	streamedContent.setName("Example.xlsx");
-//        	return streamedContent;
-			return null;
+			return DefaultStreamedContent.builder().stream(() -> inputStream)
+					.contentEncoding("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+					.name("Example.xlsx").build();
         }
 	}
 
