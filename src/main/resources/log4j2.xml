@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Logs in console, logs in file and sends an email for errors and fatal only-->
+<Configuration status="WARN">
+    <Properties>
+        <property name="basePath">.\log4j2_logs\</property>
+        <property name="folderNameDate_yyyyMM">${date:yyyyMM}</property>
+        <property name="folderNameDate_dd">${date:dd}</property>
+        <property name="fileName">${basePath}\${folderNameDate_yyyyMM}\${folderNameDate_dd}</property>
+        <property name="layoutPattern">%highlight{[%d{MMdd HH:mm:ss.SSS}] [%level] %msg} %n -> [%location] %n</property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout disableAnsi="false" pattern="${layoutPattern}"/>
+        </Console>
+        <!--
+        <SMTP name="Mail" subject="" to="x@y.com, y@y.com" from="w@y@.com"
+                      smtpHost="host" smtpPort="25" bufferSize="10">
+                </SMTP>
+        -->
+
+        <File name="LogToFileSpecific" fileName="${fileName}\main.log">
+            <PatternLayout pattern="${layoutPattern}"/>
+        </File>
+        <File name="LogToFileGeneral" fileName="${fileName}\general.log">
+            <PatternLayout pattern="${layoutPattern}"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="es.test" level="trace" additivity="false">
+            <!--<AppenderRef ref="Mail" level="trace"/>-->
+            <AppenderRef ref="Console"/>
+            <!--<AppenderRef ref="LogToFileSpecific" level="info"/>-->
+        </Logger>
+        <Root level="error">
+            <!--Some specific errors, like problems with xhtml will still show up in general file-->
+            <AppenderRef ref="Console" level="info"/>
+            <!--<AppenderRef ref="LogToFileGeneral" level="info"/>-->
+        </Root>
+    </Loggers>
+</Configuration>

@@ -27,27 +27,27 @@ spring:
 #  jpa:
 #    hibernate:
 #      ddl-auto: validate
-    
-    
+
+
   servlet:
     multipart:
       max-file-size: 15MB
       max-request-size: 15MB
-    
+
 joinfaces:
   jsf:
     project-stage: development
 #  primefaces:
 #    theme: omega
-    
+
 server:
   error:
     includeException: true
-    
+
 logging:
   level:
-    ROOT: INFO
+    ROOT: ERROR
     org.spring.security: INFO
-    org.hibernate: INFO
+    org.hibernate: ERROR
     org.springframework.web: INFO
     liquibase: INFO
